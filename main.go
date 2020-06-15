@@ -44,8 +44,8 @@ func Macd(data []goex.Kline, inFastPeriod int, inSlowPeriod int, inSignalPeriod 
 	return dif, dea, macd
 }
 
-func Boll(data []goex.Kline, inTimePeriod int, deviation float64) (up, middle, low []float64) {
-	return talib.BBands(realData(data, InClose), inTimePeriod, deviation, deviation, 0)
+func Boll(data []goex.Kline, inTimePeriod int, deviation float64, priceTy PriceType) (up, middle, low []float64) {
+	return talib.BBands(realData(data, priceTy), inTimePeriod, deviation, deviation, 0)
 }
 
 func realData(data []goex.Kline, priceTy PriceType) []float64 {
