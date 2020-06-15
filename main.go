@@ -35,8 +35,17 @@ func Atr(data []goex.Kline, inTimePeriod int) []float64 {
 	return talib.Atr(inHigh, inLow, inClose, inTimePeriod)
 }
 
-func Macd(data []goex.Kline, inFastPeriod int, inSlowPeriod int, inSignalPeriod int, priceTy PriceType) (outMACD, outMACDSignal, outMACDHist []float64) {
-	return talib.Macd(realData(data, priceTy), inFastPeriod, inSlowPeriod, inSignalPeriod)
+func Macd(data []goex.Kline, inFastPeriod int, inSlowPeriod int, inSignalPeriod int, priceTy PriceType) (DIF, DEA, MACD []float64) {
+	var macd []float64
+	dif, dea, hist := talib.Macd(realData(data, priceTy), inFastPeriod, inSlowPeriod, inSignalPeriod)
+	for _, item := range hist {
+		macd = append(macd, item*2)
+	}
+	return dif, dea, macd
+}
+
+func Boll(data []goex.Kline, inTimePeriod int, deviation float64) (up, middle, low []float64) {
+	return talib.BBands(realData(data, InClose), inTimePeriod, deviation, deviation, 0)
 }
 
 func realData(data []goex.Kline, priceTy PriceType) []float64 {
@@ -57,8 +66,4 @@ func realData(data []goex.Kline, priceTy PriceType) []float64 {
 		}
 	}
 	return inReal
-}
-
-func Boll(data []goex.Kline, inTimePeriod int, deviation float64) (up, middle, low []float64) {
-	return talib.BBands(realData(data, InClose), inTimePeriod, deviation, deviation, 0)
 }
