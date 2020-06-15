@@ -19,4 +19,8 @@ func Test_talib(t *testing.T) {
 	t.Log(goex_talib.Macd(data, 12, 26, 9, goex_talib.InClose))
 	t.Log(goex_talib.Ma(data, 60, talib.EMA, goex_talib.InClose))
 	t.Log(goex_talib.Atr(data, 20))
+	
+	//boll
+	up, middle, low := goex_talib.Boll(data, 20, 2)
+	t.Log(up[len(up)-1], middle[len(middle)-1], low[len(low)-1])
 }
