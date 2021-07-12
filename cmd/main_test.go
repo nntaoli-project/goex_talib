@@ -11,14 +11,14 @@ import (
 
 var api = okex.NewOKEx(&goex.APIConfig{
 	HttpClient: http.DefaultClient,
-	Endpoint:   "https://www.okex.me",
+	Endpoint:   "https://www.okex.com",
 })
 
 func Test_talib(t *testing.T) {
-	data, _ := api.GetKlineRecords(goex.BTC_USDT, goex.KLINE_PERIOD_1H, 300, 0)
+	data, _ := api.GetKlineRecords(goex.BTC_USDT, goex.KLINE_PERIOD_1H, 300)
 
-	t.Log(goex_talib.Ma(data, 60, talib.EMA, goex_talib.InClose))
-	t.Log(goex_talib.Atr(data, 20))
+	t.Log(goex_talib.Ma(data, 60, talib.SMA, goex_talib.InClose)) //基于收盘价的简单移动均线
+	t.Log(goex_talib.Atr(data, 20)) // atr
 
 	//boll
 	up, middle, low := goex_talib.Boll(data, 20, 2, goex_talib.InClose)
