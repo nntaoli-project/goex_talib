@@ -48,6 +48,10 @@ func Boll(data []goex.Kline, inTimePeriod int, deviation float64, priceTy PriceT
 	return talib.BBands(realData(data, priceTy), inTimePeriod, deviation, deviation, 0)
 }
 
+func Rsi(data []goex.Kline, inTimePeriod int, priceTy PriceType) []float64 {
+	return talib.Rsi(realData(data, priceTy), inTimePeriod)
+}
+
 func realData(data []goex.Kline, priceTy PriceType) []float64 {
 	var inReal []float64
 	for i := len(data) - 1; i >= 0; i-- {
