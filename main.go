@@ -52,6 +52,25 @@ func Rsi(data []goex.Kline, inTimePeriod int, priceTy PriceType) []float64 {
 	return talib.Rsi(realData(data, priceTy), inTimePeriod)
 }
 
+func Stoch(data []goex.Kline, fastKPeriod, slowKPeriod int, slowKMaty talib.MaType, slowDPeriod int, slowDMAty talib.MaType) (outSlowK []float64, outSlowD []float64) {
+
+	var (
+		inHigh  []float64
+		inLow   []float64
+		inClose []float64
+	)
+
+	for i := len(data) - 1; i >= 0; i-- {
+		k := data[i]
+		inHigh = append(inHigh, k.High)
+		inLow = append(inLow, k.Low)
+		inClose = append(inClose, k.Close)
+	}
+
+	outSlowK, outSlowD = talib.Stoch(inHigh, inLow, inClose, fastKPeriod, slowKPeriod, slowKMaty, slowDPeriod, slowDMAty)
+	return
+}
+
 func realData(data []goex.Kline, priceTy PriceType) []float64 {
 	var inReal []float64
 	for i := len(data) - 1; i >= 0; i-- {
