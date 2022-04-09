@@ -19,19 +19,9 @@ func Ma(data []goex.Kline, inTimePeriod int, maType talib.MaType, priceTy PriceT
 }
 
 func Atr(data []goex.Kline, inTimePeriod int) []float64 {
-	var (
-		inHigh  []float64
-		inLow   []float64
-		inClose []float64
-	)
-
-	for i := len(data) - 1; i >= 0; i-- {
-		k := data[i]
-		inHigh = append(inHigh, k.High)
-		inLow = append(inLow, k.Low)
-		inClose = append(inClose, k.Close)
-	}
-
+	inHigh := realData(data, InHigh)
+	inLow := realData(data, InLow)
+	inClose := realData(data, InClose)
 	return talib.Atr(inHigh, inLow, inClose, inTimePeriod)
 }
 
@@ -53,20 +43,9 @@ func Rsi(data []goex.Kline, inTimePeriod int, priceTy PriceType) []float64 {
 }
 
 func Stoch(data []goex.Kline, fastKPeriod, slowKPeriod int, slowKMaty talib.MaType, slowDPeriod int, slowDMAty talib.MaType) (outSlowK []float64, outSlowD []float64) {
-
-	var (
-		inHigh  []float64
-		inLow   []float64
-		inClose []float64
-	)
-
-	for i := len(data) - 1; i >= 0; i-- {
-		k := data[i]
-		inHigh = append(inHigh, k.High)
-		inLow = append(inLow, k.Low)
-		inClose = append(inClose, k.Close)
-	}
-
+	inHigh := realData(data, InHigh)
+	inLow := realData(data, InLow)
+	inClose := realData(data, InClose)
 	outSlowK, outSlowD = talib.Stoch(inHigh, inLow, inClose, fastKPeriod, slowKPeriod, slowKMaty, slowDPeriod, slowDMAty)
 	return
 }
