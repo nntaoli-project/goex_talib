@@ -14,6 +14,13 @@ const (
 	InOpen
 )
 
+//Ma
+// talib.MaType:
+//1. SMA:  简单移动均线
+//2. EMA:  指数移动平均线
+//3. WMA:  加权移动均线
+//4. DEMA: 双重指数移动平均线
+//5. TEMA: 三重指数移动平均线
 func Ma(data []goex.Kline, inTimePeriod int, maType talib.MaType, priceTy PriceType) []float64 {
 	return talib.Ma(realData(data, priceTy), inTimePeriod, maType)
 }
@@ -42,6 +49,9 @@ func Rsi(data []goex.Kline, inTimePeriod int, priceTy PriceType) []float64 {
 	return talib.Rsi(realData(data, priceTy), inTimePeriod)
 }
 
+//Stoch
+//KD指标: slowK,slowD两条线
+//KDJ指标：J=3*slowK-2*slowD
 func Stoch(data []goex.Kline, fastKPeriod, slowKPeriod int, slowKMaty talib.MaType, slowDPeriod int, slowDMAty talib.MaType) (outSlowK []float64, outSlowD []float64) {
 	inHigh := realData(data, InHigh)
 	inLow := realData(data, InLow)
